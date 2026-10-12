@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
 <style>
 /* Landing de una columna: cada sección es un estrado con una pieza en perspectiva
-   (escudo, losas, retrato, fichero de materias, anillo de placas, estante de tomos). El azul hondo
+   (escudo, losas, retrato, mapa de materias, anillo de placas, estante de tomos). El azul hondo
    y el papel se alternan; el oro solo marca lo que importa. */
 :root{
   --tinta:#04101F; --azul:#061A3A; --azul-alto:#0C3270;
@@ -167,32 +167,55 @@ h1 em{white-space:nowrap}
 .perfil h3 small{display:block;font:400 .78rem/1.3 var(--f-rotulo);letter-spacing:.22em;text-transform:uppercase;color:var(--oro-viejo);margin-top:.6em}
 @media(min-width:860px){
   .fundador__fila{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)}
-  .perfil{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+  .perfil__cab{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
   .retrato__marco{width:min(82%,380px)}
 }
 
-/* materias: fichero de diez guías en profundidad */
-.grafico{perspective:2200px;perspective-origin:50% 30%;padding:6px 0 0}
+/* materias: mapa de cinco ramas; cada materia es una placa blanca con canto dorado */
+.perfil__cab{display:grid;gap:clamp(14px,3vw,56px);align-items:end}
+.perfil__cab .entrada{margin-top:0}
+.grafico__cab{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em 1.6em;margin-bottom:clamp(26px,4vw,46px)}
 .grafico__titulo{font:500 .78rem/1.3 var(--f-rotulo);letter-spacing:.24em;text-transform:uppercase;color:var(--oro-viejo)}
-.fichero{--bx:-15deg;--by:-20deg;--t:58px;--dz:22px;--g:7px;position:relative;width:calc(100% - 84px);height:calc(var(--t)*10);margin:70px 0 30px}
-.guia{position:absolute;left:0;bottom:0;width:100%;height:calc(var(--t)*(var(--i) + 1));transform-style:preserve-3d;transform:translateZ(calc(var(--i)*var(--dz)*-1));transition:transform .45s cubic-bezier(.2,.7,.2,1)}
-.guia__cara{position:absolute;inset:0;display:flex;flex-direction:column;gap:2px;padding:7px 12px 0;background:linear-gradient(90deg,#0B2A63,#113E8A);border-top:1px solid rgba(232,184,75,.8);color:var(--papel);transition:background-color .3s,color .3s}
-.guia:nth-child(even) .guia__cara{background:linear-gradient(90deg,#082150,#0C3272)}
-.guia__cara b{font:500 clamp(.7rem,1.9vw,.82rem)/1.25 var(--f-rotulo);letter-spacing:.09em;text-transform:uppercase}
-.guia__cara small{font:400 clamp(.6rem,1.6vw,.68rem)/1.25 var(--f-rotulo);letter-spacing:.12em;text-transform:uppercase;color:var(--oro)}
-.guia__tapa{position:absolute;left:0;bottom:100%;width:100%;height:var(--g);background:#2E63BA;transform-origin:left bottom;transform:rotateX(90deg)}
-.guia__lado{position:absolute;left:100%;top:0;width:var(--g);height:100%;background:#041330;transform-origin:left center;transform:rotateY(90deg)}
-.guia:hover{transform:translateZ(calc(var(--i)*var(--dz)*-1)) translateY(-9px)}
-.guia:hover .guia__cara{background:linear-gradient(90deg,var(--oro-hondo),var(--oro));color:var(--tinta)}
-.guia:hover .guia__cara small{color:var(--azul)}
-.fichero__base{--bd:calc(var(--dz)*9 + 36px);position:absolute;left:-12px;right:-12px;top:100%;height:9px;transform-style:preserve-3d;transform:translateZ(18px)}
-.fichero__base i{position:absolute}
-.fichero__base .f{inset:0;background:linear-gradient(180deg,#C5CEDB,#A7B2C3)}
-.fichero__base .t{left:0;bottom:100%;width:100%;height:var(--bd);background:linear-gradient(180deg,#D5DDE8,#E9EEF4);transform-origin:left bottom;transform:rotateX(90deg)}
-.fichero__base .l{left:100%;top:0;width:var(--bd);height:100%;background:#96A2B5;transform-origin:left center;transform:rotateY(90deg)}
-@keyframes baja{from{transform:translateZ(calc(var(--i)*var(--dz)*-1)) translateY(-46px)}}
-.fichero.in .guia{animation:baja .8s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc((9 - var(--i))*70ms + 120ms)}
-@media(min-width:860px){.fichero{--t:48px;--dz:24px}}
+.grafico__entrada{font:italic 400 clamp(1.08rem,2.1vw,1.32rem)/1.35 var(--f-titulo);color:var(--azul)}
+.mapa{--d:22px;position:relative;display:grid;gap:26px;padding-right:22px}
+.rama{--bx:-9deg;--by:-14deg;position:relative}
+.rama[data-tilt]{transform:perspective(1500px) rotateX(calc(var(--bx,0deg) + var(--tx,0deg) + var(--sx,0deg))) rotateY(calc(var(--by,0deg) + var(--ty,0deg) + var(--sy,0deg)))}
+.rama__cab{position:relative;display:flex;align-items:center;gap:14px;transform-style:preserve-3d}
+.rama__cab::after{content:"";position:absolute;left:22px;top:23px;bottom:-14px;width:2px;background:var(--oro-hondo)}
+.rama__cab h4{margin:0;font:italic 500 clamp(1.2rem,2.7vw,1.36rem)/1.15 var(--f-titulo);color:var(--azul)}
+.medalla--rama{width:46px;height:46px;margin:0;flex:none}
+.medalla--rama svg{width:24px;height:24px}
+.hojas{display:grid;gap:12px;margin:14px 0 0 50px;transform-style:preserve-3d}
+.hoja{position:relative;transform-style:preserve-3d}
+.hoja::before{content:"";position:absolute;left:-28px;top:-12px;width:28px;height:calc(50% + 12px);border-left:2px solid var(--oro-hondo);border-bottom:2px solid var(--oro-hondo)}
+.hoja:first-child::before{top:-14px;height:calc(50% + 14px)}
+.hoja::after{content:"";position:absolute;left:-28px;top:50%;bottom:-12px;width:2px;background:var(--oro-hondo)}
+.hoja:last-child::after{bottom:-26px}
+.rama:last-child .hoja:last-child::after{display:none}
+.placa-m{position:relative;display:flex;flex-direction:column;gap:6px;padding:12px 14px 12px;background:#fff;border:1px solid rgba(6,26,58,.12);color:var(--tinta);text-decoration:none;box-shadow:0 22px 30px -22px rgba(6,26,58,.5);transform-style:preserve-3d;transform:translateZ(var(--d));transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.placa-m b{padding-right:24px;font:500 clamp(.74rem,2vw,.8rem)/1.3 var(--f-rotulo);letter-spacing:.08em;text-transform:uppercase;color:var(--azul)}
+.placa-m__txt{font-size:.86rem;line-height:1.4;color:var(--fg2)}
+.placa-m__wa{position:absolute;top:12px;right:12px;width:15px;height:15px;color:var(--oro-hondo)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips i{font:400 .62rem/1 var(--f-rotulo);font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--oro-viejo);border:1px solid rgba(138,106,23,.45);border-radius:2px;padding:.4em .6em}
+.placa-m__tapa{position:absolute;left:-1px;right:-1px;bottom:100%;height:var(--d);background:linear-gradient(90deg,var(--oro-hondo),#F0CB6C);transform-origin:left bottom;transform:rotateX(90deg)}
+.placa-m__lado{position:absolute;left:100%;top:-1px;bottom:-1px;width:var(--d);background:linear-gradient(180deg,#0E3776,#061A3A);transform-origin:left center;transform:rotateY(90deg)}
+.placa-m:hover,.placa-m:focus-visible{transform:translateZ(calc(var(--d) + 14px));border-color:var(--oro-hondo)}
+@keyframes brota{from{transform:translateZ(0) translateY(16px)}}
+.mapa.in .placa-m{animation:brota .7s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--n)*80ms + 100ms)}
+@media(min-width:1000px){
+  .mapa{--d:26px;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px;padding-right:0}
+  .mapa::before{content:"";position:absolute;left:10%;right:10%;top:22px;height:2px;background:var(--oro-hondo)}
+  .rama{--bx:-9deg;--by:-15deg;display:flex;flex-direction:column;align-items:center}
+  .rama::before{content:"";position:absolute;left:50%;top:23px;bottom:44px;width:2px;margin-left:-1px;background:var(--oro-hondo)}
+  .rama__cab{flex-direction:column;gap:12px;text-align:center}
+  .rama__cab::after{display:none}
+  .rama__cab h4{display:flex;align-items:center;justify-content:center;min-height:2.5em;font-size:1.12rem;padding:2px 10px;background:var(--papel);transform:translateZ(2px)}
+  .hojas{display:flex;flex-direction:column;flex:1;gap:16px;width:100%;margin:14px 0 0}
+  .hoja{display:flex;flex:1}
+  .hoja::before,.hoja::after{display:none}
+  .placa-m{flex:1}
+}
 
 /* ---------- clientes: anillo de placas ---------- */
 .clientes{background:linear-gradient(180deg,var(--tinta),var(--azul) 55%,var(--azul))}
@@ -301,6 +324,7 @@ h1 em{white-space:nowrap}
 </style>
 </head>
 <body>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true"><symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol></svg>
 <header class="cab">
   <div class="caja cab__fila">
     <a class="cab__logo" href="#inicio" aria-label="Daniel Núñez Abogados, ir al inicio"><span class="logo"></span></a>
@@ -386,25 +410,54 @@ h1 em{white-space:nowrap}
     </div>
   </div>
   <div class="caja perfil">
-    <div class="sube">
-      <p class="ceja">Resumen personal</p>
-      <h3>Daniel Núñez<small>Abogado litigante</small></h3>
+    <div class="perfil__cab sube">
+      <div>
+        <p class="ceja">Resumen personal</p>
+        <h3>Daniel Núñez<small>Abogado litigante</small></h3>
+      </div>
       <p class="entrada">Abogado egresado de la UPAO. Egresado de la maestría en Ciencias Penales de la Universidad de San Martín de Porres. Litigante en materia laboral empresarial, delitos contra la Administración Pública y control gubernamental. Investigador jurídico y conferencista, con experiencia en asesoría legal en casos de alta complejidad.</p>
     </div>
     <div class="grafico" data-zona>
-      <p class="grafico__titulo">Materias</p>
-      <ol class="fichero" data-tilt="5" data-scroll="4">
-        <li class="guia" style="--i:9"><span class="guia__cara"><b>Derecho Laboral Empresarial</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:8"><span class="guia__cara"><b>Derecho Laboral Público</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:7"><span class="guia__cara"><b>Procedimiento Administrativo Disciplinario</b><small>SERVIR</small></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:6"><span class="guia__cara"><b>Procedimiento Administrativo Sancionador</b><small>SUNAFIL / TSRA Contraloría / OECE</small></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:5"><span class="guia__cara"><b>Delitos contra la Administración Pública</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:4"><span class="guia__cara"><b>Proceso de Arbitraje</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:3"><span class="guia__cara"><b>Delitos contra la Vida, el Cuerpo y la Salud</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:2"><span class="guia__cara"><b>Control Gubernamental</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:1"><span class="guia__cara"><b>Contrataciones Públicas</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="guia" style="--i:0"><span class="guia__cara"><b>Derecho Inmobiliario</b></span><i class="guia__tapa"></i><i class="guia__lado"></i></li>
-        <li class="fichero__base" aria-hidden="true"><i class="f"></i><i class="t"></i><i class="l"></i></li>
+      <div class="grafico__cab">
+        <p class="grafico__titulo">Materias</p>
+        <p class="grafico__entrada">Diez materias en cinco ramas. Toque la suya para consultarnos por WhatsApp.</p>
+      </div>
+      <ol class="mapa">
+        <li class="rama" data-tilt="5" data-scroll="4">
+          <div class="rama__cab"><span class="medalla medalla--rama" aria-hidden="true"><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><span class="medalla__cara"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="16" width="34" height="24" rx="3"/><path d="M18 16v-4a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v4"/><path d="M7 27h34"/></svg></span></span><h4>Laboral</h4></div>
+          <ul class="hojas">
+            <li class="hoja"><a class="placa-m" style="--n:0" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Derecho%20Laboral%20Empresarial." target="_blank" rel="noopener"><b>Derecho Laboral Empresarial</b><span class="placa-m__txt">Contratos, despidos e inspecciones.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+            <li class="hoja"><a class="placa-m" style="--n:1" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Derecho%20Laboral%20P%C3%BAblico." target="_blank" rel="noopener"><b>Derecho Laboral Público</b><span class="placa-m__txt">Trabajadores y servidores del Estado.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+          </ul>
+        </li>
+        <li class="rama" data-tilt="5" data-scroll="4">
+          <div class="rama__cab"><span class="medalla medalla--rama" aria-hidden="true"><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><span class="medalla__cara"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6h15l8 8v28H13z"/><path d="M28 6v8h8"/><path d="M18 29l5 5 8-10"/></svg></span></span><h4>Administrativo</h4></div>
+          <ul class="hojas">
+            <li class="hoja"><a class="placa-m" style="--n:2" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Procedimiento%20Administrativo%20Disciplinario%20%28SERVIR%29." target="_blank" rel="noopener"><b>Procedimiento Administrativo Disciplinario</b><span class="chips"><i>SERVIR</i></span><span class="placa-m__txt">Faltas atribuidas a servidores civiles.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+            <li class="hoja"><a class="placa-m" style="--n:3" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Procedimiento%20Administrativo%20Sancionador%20%28SUNAFIL%20%2F%20TSRA%20Contralor%C3%ADa%20%2F%20OECE%29." target="_blank" rel="noopener"><b>Procedimiento Administrativo Sancionador</b><span class="chips"><i>SUNAFIL</i><i>TSRA Contraloría</i><i>OECE</i></span><span class="placa-m__txt">Multas y sanciones de entes fiscalizadores.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+          </ul>
+        </li>
+        <li class="rama" data-tilt="5" data-scroll="4">
+          <div class="rama__cab"><span class="medalla medalla--rama" aria-hidden="true"><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><span class="medalla__cara"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M24 8v32M14 40h20M10 14h28"/><path d="M10 14 5 27a5.5 5.5 0 0 0 10 0zM38 14l-5 13a5.5 5.5 0 0 0 10 0z"/></svg></span></span><h4>Penal</h4></div>
+          <ul class="hojas">
+            <li class="hoja"><a class="placa-m" style="--n:4" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Delitos%20contra%20la%20Administraci%C3%B3n%20P%C3%BAblica." target="_blank" rel="noopener"><b>Delitos contra la Administración Pública</b><span class="placa-m__txt">Peculado, colusión, cohecho y afines.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+            <li class="hoja"><a class="placa-m" style="--n:5" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Delitos%20contra%20la%20Vida%2C%20el%20Cuerpo%20y%20la%20Salud." target="_blank" rel="noopener"><b>Delitos contra la Vida, el Cuerpo y la Salud</b><span class="placa-m__txt">Homicidio, lesiones y afines.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+          </ul>
+        </li>
+        <li class="rama" data-tilt="5" data-scroll="4">
+          <div class="rama__cab"><span class="medalla medalla--rama" aria-hidden="true"><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><span class="medalla__cara"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19 24 8l18 11z"/><path d="M11 24v13M19 24v13M29 24v13M37 24v13M7 41h34"/></svg></span></span><h4>Control y contratación pública</h4></div>
+          <ul class="hojas">
+            <li class="hoja"><a class="placa-m" style="--n:6" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Control%20Gubernamental." target="_blank" rel="noopener"><b>Control Gubernamental</b><span class="placa-m__txt">Auditorías e informes de control.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+            <li class="hoja"><a class="placa-m" style="--n:7" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Contrataciones%20P%C3%BAblicas." target="_blank" rel="noopener"><b>Contrataciones Públicas</b><span class="placa-m__txt">Selección y contratos con el Estado.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+          </ul>
+        </li>
+        <li class="rama" data-tilt="5" data-scroll="4">
+          <div class="rama__cab"><span class="medalla medalla--rama" aria-hidden="true"><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><span class="medalla__cara"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 23 24 9l17 14"/><path d="M12 20v20h24V20"/><path d="M21 40V29h6v11"/></svg></span></span><h4>Arbitraje e inmobiliario</h4></div>
+          <ul class="hojas">
+            <li class="hoja"><a class="placa-m" style="--n:8" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Proceso%20de%20Arbitraje." target="_blank" rel="noopener"><b>Proceso de Arbitraje</b><span class="placa-m__txt">Controversias ante un tribunal arbitral.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+            <li class="hoja"><a class="placa-m" style="--n:9" href="https://wa.me/51982553058?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20Derecho%20Inmobiliario." target="_blank" rel="noopener"><b>Derecho Inmobiliario</b><span class="placa-m__txt">Compraventa, títulos y saneamiento.</span><svg class="placa-m__wa" aria-hidden="true"><use href="#i-wa"/></svg><i class="placa-m__tapa"></i><i class="placa-m__lado"></i></a></li>
+          </ul>
+        </li>
       </ol>
     </div>
   </div>
@@ -558,13 +611,13 @@ h1 em{white-space:nowrap}
     destino.scrollIntoView({ behavior: quieto ? 'auto' : 'smooth', block: 'start' });
   }));
 
-  // Entradas: el contenido ya está visible; al asomar, sube y las guías del fichero caen en su sitio.
+  // Entradas: el contenido ya está visible; al asomar, sube y las placas del mapa brotan una a una.
   const entra = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('in');
     entra.unobserve(e.target);
   }));
-  $$('.sube, .fichero').forEach(el => entra.observe(el));
+  $$('.sube, .mapa').forEach(el => entra.observe(el));
 
   // Polvo dorado alrededor del escudo (posiciones fijas, sin azar real).
   const polvo = $('.emblema__polvo');
