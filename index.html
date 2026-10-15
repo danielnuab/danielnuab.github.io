@@ -22,6 +22,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" as="image" href="fondo.webp" type="image/webp">
+<link rel="alternate" type="application/rss+xml" title="Jurisprudencia — Daniel Núñez Abogados" href="feed.xml">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://danielnuab.com/#sitio","url":"https://danielnuab.com/","name":"Daniel Núñez Abogados","inLanguage":"es-PE","publisher":{"@id":"https://danielnuab.com/#firma"}},{"@type":"LegalService","@id":"https://danielnuab.com/#firma","name":"Daniel Núñez Abogados","url":"https://danielnuab.com/","logo":"https://danielnuab.com/icono-512.png","image":"https://danielnuab.com/portada.jpg","slogan":"La defensa nunca descansa.","description":"Firma de abogados en Yurimaguas, Loreto. Litigios, asesoría legal y capacitación en materia laboral, penal y de control gubernamental. WhatsApp 982 553 058.","telephone":"+51982553058","email":"danielnuab@gmail.com","foundingDate":"2020-05","address":{"@type":"PostalAddress","streetAddress":"Calle Progreso N.° 113","addressLocality":"Yurimaguas","addressRegion":"Loreto","addressCountry":"PE"},"founder":{"@type":"Person","name":"Daniel Núñez","jobTitle":"Socio fundador"},"knowsAbout":["Derecho Laboral Empresarial","Derecho Laboral Público","Procedimiento Administrativo Disciplinario (SERVIR)","Procedimiento Administrativo Sancionador (SUNAFIL, TSRA Contraloría, OECE)","Delitos contra la Administración Pública","Proceso de Arbitraje","Delitos contra la Vida, el Cuerpo y la Salud","Control Gubernamental","Contrataciones Públicas","Derecho Inmobiliario"],"sameAs":["https://www.facebook.com/danielnuab","https://www.instagram.com/danielnuab/","https://www.linkedin.com/company/danielnuab","https://www.youtube.com/channel/UCf37wTQzQDV6SQeSYukF2wA","https://www.tiktok.com/@danielnuare"]}]}</script>
 <title>Daniel Núñez Abogados | Abogados en Yurimaguas, Loreto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -442,10 +443,32 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
 .js .wa:not(.ve){transform:translateY(110px)}
 .wa:active{transform:scale(.94)}
 @media(hover:hover) and (pointer:fine){.wa.ve:hover{transform:translateY(-3px)}}
+/* ---------- jurisprudencia ----------
+   Las tarjetas usan las mismas clases que /jurisprudencia/ (jurisprudencia.css):
+   un solo molde de tarjeta para la portada, para esa página y para lo que el
+   navegador repinta al refrescar. */
+.jurs__lista{display:grid;gap:clamp(14px,1.8vw,22px);grid-template-columns:repeat(auto-fill,minmax(290px,1fr));margin-top:clamp(30px,4vw,56px)}
+.jur{position:relative;display:flex;background:var(--niebla-alta);border:1px solid var(--raya-fria);border-radius:4px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 10px 26px -22px rgba(31,42,55,.9);transition:transform .3s var(--sale),box-shadow .3s var(--sale),border-color .3s}
+.jur>article{display:flex;flex-direction:column;gap:.55em;padding:clamp(20px,2.4vw,28px);width:100%}
+.jur__org{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4em 1em;font:500 .68rem/1.3 var(--f-rotulo);letter-spacing:.2em;text-transform:uppercase;color:var(--acero)}
+.jur__esp{display:block;color:var(--acero-claro);letter-spacing:.14em}
+.jur__fecha{color:var(--acero-claro);letter-spacing:.14em;font-variant-numeric:lining-nums}
+.jur__tit{font:500 clamp(1.1rem,1.8vw,1.32rem)/1.22 var(--f-titulo);letter-spacing:-.01em}
+.nb{white-space:nowrap}
+.jur__materia{font:400 .8rem/1.4 var(--f-rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--acero-hondo)}
+.jur__res{color:var(--fg2);font-size:.98rem;line-height:1.62}
+.jur__ir{margin-top:auto;padding-top:.5em;align-self:start;font:500 .74rem/1.3 var(--f-rotulo);letter-spacing:.16em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none}
+.jurs__pie{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 36px;margin-top:clamp(26px,3.4vw,44px)}
+.jurs__aviso{max-width:54ch;padding-left:14px;border-left:2px solid var(--acero-claro);color:var(--fg2);font-size:.88rem;line-height:1.6}
+@media(hover:hover) and (pointer:fine){
+  .jur:hover{transform:translateY(-3px);border-color:var(--acero-claro);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 22px 40px -26px rgba(31,42,55,.85)}
+  .jur__ir:hover{color:var(--pizarra)}
+}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .js .rv{transform:none;filter:none}
+  .jur:hover{transform:none}
 }
 </style>
 </head>
@@ -465,6 +488,7 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
       <a href="#clientes">Clientes</a>
       <a href="#fundador">Fundador</a>
       <a href="#justiniano">Justiniano</a>
+      <a href="#jurisprudencia">Jurisprudencia</a>
       <a href="#contacto">Contacto</a>
     </nav>
     <div class="cab__lado">
@@ -482,7 +506,8 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
     <li><a href="#clientes" style="--i:3">Clientes</a></li>
     <li><a href="#fundador" style="--i:4">Fundador</a></li>
     <li><a href="#justiniano" style="--i:5">Justiniano</a></li>
-    <li><a href="#contacto" style="--i:6">Contacto</a></li>
+    <li><a href="#jurisprudencia" style="--i:6">Jurisprudencia</a></li>
+    <li><a href="#contacto" style="--i:7">Contacto</a></li>
   </ol>
   <p class="menu__pie">Calle Progreso N.°&nbsp;113, Yurimaguas, Loreto<br>982&nbsp;553&nbsp;058 · danielnuab@gmail.com</p>
 </div>
@@ -723,6 +748,34 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
         <p class="ficha" aria-live="polite"><span id="ficha-num">Tomo II</span><b id="ficha-nombre">Corte Suprema</b></p>
         <p class="just__lema">Nueve organismos, una sola búsqueda.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec jurs" id="jurisprudencia">
+  <div class="caja">
+    <div class="cab-sec cab-sec--dos">
+      <div>
+        <p class="ceja rv">Jurisprudencia</p>
+        <h2 class="rv" style="--i:1">Últimas resoluciones <em>indexadas</em></h2>
+      </div>
+      <p class="entrada rv" style="--i:2">Lo último que ha entrado al corpus de Justiniano: Tribunal Constitucional,
+        Corte Suprema, Cortes Superiores y tribunales administrativos.</p>
+    </div>
+    <!-- data-fichas: los expedientes que tienen su página publicada en
+         /jurisprudencia/. Al refrescar, solo se enlaza a los de esta lista; lo
+         que llegue nuevo del servidor todavía no tiene página. -->
+    <ul class="jurs__lista" id="jurs-lista" data-fichas="corte-superior-exp-01247-2025-0-3208-jr-la-02 corte-suprema-recurso-de-nulidad-124-2026-lima servir-resolucion-005175-2026-servir-tsc-primera-sala contrataciones-del-estado-resolucion-9180-2026-tcp-s3 sunafil-resolucion-1144-2026-sunafil-tfl-primera-sala corte-suprema-casacion-11870-2023-lima corte-suprema-apelacion-91-2025-lima sunafil-resolucion-0955-2026-sunafil-tfl-primera-sala contrataciones-del-estado-resolucion-09104-2026-tcp-s4 corte-superior-sentencia-de-vista-resolucion-26-exp-23880-2024-0-0901-jr-fc-02 corte-suprema-casacion-21811-2023-junin corte-suprema-recurso-de-nulidad-155-2026-del-santa servir-resolucion-005086-2026-servir-tsc-primera-sala corte-suprema-recurso-de-nulidad-212-2026-lima corte-superior-exp-25071-2023-0-1801-jr-la-07 corte-suprema-recurso-de-nulidad-672-2025-nacional servir-resolucion-005390-2026-servir-tsc-segunda-sala corte-superior-sentencia-de-vista-resolucion-23-exp-02638-2022-0-2001-jr-fc-02 corte-suprema-casacion-laboral-6194-2025-lima tribunal-constitucional-exp-01189-2023-phc-tc servir-resolucion-005388-2026-servir-tsc-segunda-sala corte-superior-sentencia-de-vista-exp-16520-2025-0-1801-jr-ca-17 corte-suprema-casacion-26029-2025-huaura corte-suprema-casacion-1715-2023-lambayeque">
+      <li class="jur rv" style="--i:0" id="corte-superior-exp-01247-2025-0-3208-jr-la-02"><article><p class="jur__org"><span>Corte Superior<span class="jur__esp">Laboral</span></span><time class="jur__fecha">09/10/2026</time></p><h3 class="jur__tit">Exp. <span class="nb">N.°</span>&nbsp;01247-2025-0-3208-JR-LA-02</h3><p class="jur__materia">Locación de servicios – reposición e indemnización</p><p class="jur__res">Un prestador de servicios demandó a la Empresa Municipal de Mercados S.A. (EMMSA) para que se reconociera como laboral su vínculo bajo contratos de locación entre el 14 de junio de 2022 y el 17 de julio de 2025. Solicitó reposición por despido incausado, inscripción en planilla, beneficios sociales e indemnización. Primera instancia estimó parcialmente esas pretensiones y EMMSA apeló. La Sala revisó la valoración de órdenes de servicio, recibos por honorarios, información de planilla, un informe institucional, fotografías, correo institucional y la declaración del demandante; también examinó los montos concedidos por el cese.</p><a class="jur__ir" href="jurisprudencia/corte-superior-exp-01247-2025-0-3208-jr-la-02/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+      <li class="jur rv" style="--i:1" id="corte-suprema-recurso-de-nulidad-124-2026-lima"><article><p class="jur__org"><span>Corte Suprema<span class="jur__esp">Penal</span></span><time class="jur__fecha">17/08/2026</time></p><h3 class="jur__tit">Recurso de Nulidad <span class="nb">N.°</span>&nbsp;124-2026 Lima</h3><p class="jur__materia">Estafa – revocación de pena suspendida</p><p class="jur__res">En un proceso por estafa simple, la agraviada pidió que se revocara la suspensión de la pena de la sentenciada porque no comparecía mensualmente al control biométrico ni había pagado íntegramente la reparación civil. El juzgado acogió el pedido e hizo efectiva la pena de 2 años y 6 meses; la Sala Superior confirmó. Mediante recurso de nulidad concedido por queja excepcional, la defensa alegó que las demoras en el registro no eran imputables a su patrocinada, que esta ya firmaba regularmente y que había efectuado pagos parciales. La Corte Suprema examinó si el auto de vista estaba debidamente motivado.</p><a class="jur__ir" href="jurisprudencia/corte-suprema-recurso-de-nulidad-124-2026-lima/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+      <li class="jur rv" style="--i:2" id="servir-resolucion-005175-2026-servir-tsc-primera-sala"><article><p class="jur__org"><span>SERVIR<span class="jur__esp">Gestión pública · SERVIR y SUNAFIL</span></span><time class="jur__fecha">02/10/2026</time></p><h3 class="jur__tit">Resolución <span class="nb">N.°</span>&nbsp;005175-2026-SERVIR/TSC-Primera Sala</h3><p class="jur__materia">Nulidad de suspensión disciplinaria por debido procedimiento</p><p class="jur__res">La Municipalidad Distrital de Chinchero abrió un procedimiento disciplinario contra quien ejercía la jefatura de la Unidad de Personal. Le atribuyó haber rectificado los resultados finales del Proceso CAS N.° 001-2024-MDCH mediante un acta de corrección de digitación, pese a no integrar el comité de selección. El servidor sostuvo en sus descargos que el comité ya había concluido sus funciones y que el cronograma no asignaba expresamente la rectificación al órgano que emitió los resultados. La municipalidad le impuso 6 meses de suspensión sin remuneraciones y rechazó su reconsideración. El caso llegó en apelación a la Primera Sala.</p><a class="jur__ir" href="jurisprudencia/servir-resolucion-005175-2026-servir-tsc-primera-sala/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+      <li class="jur rv" style="--i:3" id="contrataciones-del-estado-resolucion-9180-2026-tcp-s3"><article><p class="jur__org"><span>Contrataciones del Estado<span class="jur__esp">Gestión pública · Contrataciones</span></span><time class="jur__fecha">12/10/2026</time></p><h3 class="jur__tit">Resolución <span class="nb">N.°</span>&nbsp;9180-2026-TCP-S3</h3><p class="jur__materia">Nulidad por motivación insuficiente de acto</p><p class="jur__res">La Municipalidad Distrital de Marcona convocó un concurso público, bajo la Ley N.° 30225, para contratar la supervisión de una obra educativa. Tras anteriores apelaciones, el Consorcio Edificación obtuvo la buena pro. La entidad emitió luego la Resolución de Gerencia N.° 162-2026-GM/MDM, vinculando la pérdida de esa buena pro y la nulidad del procedimiento con presuntas deficiencias en la acreditación del jefe de supervisión e información supuestamente inexacta. El consorcio apeló: sostuvo, entre otros argumentos, que la resolución no identificaba con claridad los documentos ni los hechos que sustentaban la decisión, y pidió que se ordenara suscribir el contrato.</p><a class="jur__ir" href="jurisprudencia/contrataciones-del-estado-resolucion-9180-2026-tcp-s3/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+      <li class="jur rv" style="--i:4" id="sunafil-resolucion-1144-2026-sunafil-tfl-primera-sala"><article><p class="jur__org"><span>SUNAFIL</span><time class="jur__fecha">22/09/2026</time></p><h3 class="jur__tit">Resolución <span class="nb">N.°</span>&nbsp;1144-2026-SUNAFIL/TFL-Primera Sala</h3><p class="jur__materia">Entrega tardía de información y graduación de multa</p><p class="jur__res">En una inspección a CLIFOR S.R.L., SUNAFIL requirió información el 21 de abril de 2021 para verificar las materias comprendidas en la orden inspectiva. La empresa no la remitió dentro del plazo, y la autoridad concluyó que esa omisión impidió continuar la investigación. La documentación apareció meses después, en los descargos del procedimiento sancionador. La Intendencia de Lima Metropolitana confirmó una multa muy grave por afectar la labor inspectiva, calculada sobre 16 trabajadores. Ante el Tribunal, la empresa discutió la infracción y aportó documentos según los cuales 3 personas incluidas en ese cálculo ya no trabajaban allí cuando ocurrió la inspección.</p><a class="jur__ir" href="jurisprudencia/sunafil-resolucion-1144-2026-sunafil-tfl-primera-sala/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+      <li class="jur rv" style="--i:5" id="corte-suprema-casacion-11870-2023-lima"><article><p class="jur__org"><span>Corte Suprema<span class="jur__esp">Laboral</span></span><time class="jur__fecha">31/08/2026</time></p><h3 class="jur__tit">Casación <span class="nb">N.°</span>&nbsp;11870-2023 Lima</h3><p class="jur__materia">Utilidades laborales y lucro cesante</p><p class="jur__res">Una trabajadora demandó al Banco de la Nación por categoría, reintegros, beneficios convencionales, utilidades e indemnización. Alegó que un proceso anterior había reconocido su vínculo laboral indeterminado. El juzgado estimó parcialmente sus pedidos, incluidos utilidades y lucro cesante, pero rechazó la categoría Profesional II. La Sala Superior retiró los conceptos de movilidad y refrigerio y confirmó los demás extremos. El Banco recurrió en casación: sostuvo que la trabajadora debía probar los días efectivamente laborados para calcular utilidades, cuestionó la cuantía del lucro cesante y denunció defectos de motivación.</p><a class="jur__ir" href="jurisprudencia/corte-suprema-casacion-11870-2023-lima/">Leer la ficha<span aria-hidden="true">&nbsp;&rarr;</span></a></article></li>
+    </ul>
+    <div class="jurs__pie">
+      <p class="jurs__aviso rv">Las fichas las redacta Justiniano automáticamente a partir del texto de cada resolución. El documento que vale es el PDF oficial.</p>
+      <a class="btn btn--linea rv" style="--i:1" href="jurisprudencia/"><span>Ver todas las resoluciones</span><span class="btn__ico"><svg aria-hidden="true"><use href="#i-sale"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -1058,6 +1111,73 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(b.dataset.copia).then(hecho, marcar);
     else marcar();
   }));
+
+  // Jurisprudencia: las resoluciones vienen ya escritas en el HTML (las puso
+  // build.py al publicar, para que Google las vea). Si Justiniano tiene algo
+  // más nuevo, se repinta aquí; si no contesta, se queda lo escrito, que es lo
+  // que debe pasar los días en que la página no se vuelve a publicar.
+  const listaJur = $('#jurs-lista');
+  if (listaJur) {
+    // Las tarjetas se construyen por DOM, nunca con innerHTML: el texto lo
+    // escribe una IA en el servidor y aquí se trata como texto, no como HTML.
+    const pon = (padre, etiqueta, clase, texto) => {
+      const e = d.createElement(etiqueta);
+      if (clase) e.className = clase;
+      if (texto != null) e.textContent = texto;
+      padre.appendChild(e);
+      return e;
+    };
+    const publicadas = new Set((listaJur.dataset.fichas || '').split(/\s+/).filter(Boolean));
+    const tarjeta = (n, i) => {
+      const li = d.createElement('li');
+      li.className = 'jur rv in';
+      li.style.setProperty('--i', i);
+      if (n.slug) li.id = String(n.slug);
+      const art = pon(li, 'article');
+      const org = pon(art, 'p', 'jur__org');
+      const quien = pon(org, 'span', '', n.organismo || '');
+      if (n.especialidad) pon(quien, 'span', 'jur__esp', n.especialidad);
+      if (n.fecha) pon(org, 'time', 'jur__fecha', n.fecha);
+      // El ordinal se cose al número para que el "°" no quede huérfano al
+      // final de línea; igual que hace noticias.py al escribir el HTML.
+      const h = pon(art, 'h3', 'jur__tit');
+      const partes = String(n.titulo || '').split('N.° ');
+      h.appendChild(d.createTextNode(partes[0]));
+      if (partes.length > 1) {
+        pon(h, 'span', 'nb', 'N.°');
+        h.appendChild(d.createTextNode(' ' + partes.slice(1).join('N.° ')));
+      }
+      if (n.materia) pon(art, 'p', 'jur__materia', n.materia);
+      pon(art, 'p', 'jur__res', n.caso || '');
+      // Solo se enlaza a la ficha si está publicada; si no, al PDF, y solo
+      // cuando apunta a Drive.
+      if (n.slug && publicadas.has(String(n.slug))) {
+        const a = pon(art, 'a', 'jur__ir', 'Leer la ficha');
+        a.href = 'jurisprudencia/' + n.slug + '/';
+        pon(a, 'span', '', ' →').setAttribute('aria-hidden', 'true');
+      } else if (typeof n.pdf === 'string' && n.pdf.startsWith('https://drive.google.com/')) {
+        const a = pon(art, 'a', 'jur__ir', 'Descargar el PDF');
+        a.href = n.pdf; a.target = '_blank'; a.rel = 'noopener';
+        pon(a, 'span', '', ' →').setAttribute('aria-hidden', 'true');
+      }
+      return li;
+    };
+    const cuantas = listaJur.children.length || 6;
+    fetch('https://justiniano.pe/api/public/noticias?limite=' + cuantas, { mode: 'cors' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(j => {
+        const ns = j && Array.isArray(j.noticias) ? j.noticias : null;
+        if (!ns || !ns.length) return;
+        // Si lo primero que trae es lo que ya está escrito, no se toca nada:
+        // repintar sin motivo haría parpadear la sección.
+        const primero = listaJur.firstElementChild;
+        if (primero && primero.id && primero.id === ns[0].slug) return;
+        const nueva = d.createDocumentFragment();
+        ns.slice(0, cuantas).forEach((n, i) => nueva.appendChild(tarjeta(n, i)));
+        listaJur.replaceChildren(nueva);
+      })
+      .catch(() => {});
+  }
 })();
 </script>
 </body>

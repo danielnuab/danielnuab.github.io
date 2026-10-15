@@ -1,0 +1,81 @@
+/* Jurisprudencia — mismos colores y tipografías que la portada, en una hoja
+   aparte porque estas páginas no incrustan imágenes y cargan ligeras. */
+:root{
+  --niebla:#EDF1F6;--niebla-alta:#F8FAFC;--bruma:#DCE3EC;--acero-claro:#B4C2D1;
+  --acero:#64788F;--acero-hondo:#3B4D62;--pizarra:#1F2A37;--tinta:#1A1F26;--gris:#4F5B69;
+  --f-titulo:"Bodoni Moda","Bodoni MT","Didot","Times New Roman",serif;
+  --f-rotulo:"Oswald","Arial Narrow",sans-serif;
+  --f-texto:"Lato","Segoe UI",system-ui,sans-serif;
+  --margen:clamp(20px,5vw,56px);--sale:cubic-bezier(.23,1,.32,1);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--niebla);color:var(--tinta);font:400 1.0625rem/1.7 var(--f-texto);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,p,ul,ol{margin:0}
+ul{padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--acero-hondo);outline-offset:3px}
+::selection{background:var(--pizarra);color:#fff}
+.nb{white-space:nowrap}
+.caja{width:min(1200px,calc(100% - 2*var(--margen)));margin-inline:auto}
+.cab{border-bottom:1px solid rgba(26,31,38,.12);background:var(--niebla-alta)}
+.cab .caja{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:18px}
+.cab__logo{display:block;width:clamp(150px,20vw,210px);aspect-ratio:1221/324;background:var(--logo) center/contain no-repeat}
+.cab__volver{font:500 .76rem/1.3 var(--f-rotulo);letter-spacing:.2em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none}
+.cab__volver:hover{color:var(--pizarra)}
+.enc{padding-block:clamp(48px,7vw,96px) clamp(26px,4vw,48px)}
+.ceja{display:flex;align-items:center;gap:.9em;font:500 .76rem/1.3 var(--f-rotulo);letter-spacing:.26em;text-transform:uppercase;color:var(--acero-hondo)}
+.ceja::before{content:"";flex:none;width:34px;height:1px;background:currentColor}
+h1{font-family:var(--f-titulo);font-weight:500;letter-spacing:-.018em;font-size:clamp(1.9rem,4.4vw,3.2rem);line-height:1.07;margin-top:.4em;text-wrap:balance}
+/* Un expediente completo ("Exp. N.° 01247-2025-0-3208-JR-LA-02") a tamaño de
+   titular se parte en dos líneas llenas de guiones sueltos; por encima de 32
+   caracteres se baja un escalón. */
+h1.largo{font-size:clamp(1.5rem,2.9vw,2.2rem);line-height:1.14}
+h1 em{font-style:italic;color:#5C7389}
+.entrada{color:var(--gris);max-width:62ch;margin-top:1.1em;font-size:clamp(1rem,1.3vw,1.1rem)}
+.aviso{margin-top:1.4em;padding:14px 18px;border-left:2px solid var(--acero-claro);background:rgba(255,255,255,.6);color:var(--gris);font-size:.94rem;max-width:62ch}
+
+/* índice de especialidades */
+.indice{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:1.6em}
+.indice a{padding:.42em .9em;border:1px solid rgba(26,31,38,.16);border-radius:999px;background:var(--niebla-alta);font:500 .72rem/1.3 var(--f-rotulo);letter-spacing:.12em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none;transition:border-color .25s,color .25s,background-color .25s}
+.indice a:hover{border-color:var(--acero);color:var(--pizarra);background:#fff}
+.indice b{font-weight:400;color:var(--acero-claro)}
+
+/* una sección por especialidad */
+.esp{padding-top:clamp(34px,5vw,64px)}
+.esp__tit{display:flex;align-items:baseline;gap:.8em;font:500 .86rem/1.3 var(--f-rotulo);letter-spacing:.24em;text-transform:uppercase;color:var(--acero-hondo);padding-bottom:.9em;border-bottom:1px solid rgba(26,31,38,.14)}
+.esp__tit b{font-weight:400;color:var(--acero-claro);font-size:.8em}
+
+.lista{display:grid;gap:clamp(14px,1.8vw,22px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:clamp(16px,2vw,24px)}
+.jur{position:relative;display:flex;background:var(--niebla-alta);border:1px solid rgba(26,31,38,.1);border-radius:4px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 10px 26px -22px rgba(31,42,55,.9);transition:transform .3s var(--sale),box-shadow .3s var(--sale),border-color .3s}
+.jur:hover{transform:translateY(-3px);border-color:var(--acero-claro);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 22px 40px -26px rgba(31,42,55,.85)}
+.jur>article{display:flex;flex-direction:column;gap:.55em;padding:clamp(20px,2.4vw,28px);width:100%}
+.jur__org{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4em 1em;font:500 .68rem/1.3 var(--f-rotulo);letter-spacing:.2em;text-transform:uppercase;color:var(--acero)}
+.jur__esp{display:block;color:var(--acero-claro);letter-spacing:.14em}
+.jur__fecha{color:var(--acero-claro);letter-spacing:.14em;font-variant-numeric:lining-nums}
+.jur__tit{font:500 clamp(1.1rem,1.8vw,1.32rem)/1.22 var(--f-titulo);letter-spacing:-.01em}
+.jur__materia{font:400 .8rem/1.4 var(--f-rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--acero-hondo)}
+.jur__res{color:var(--gris);font-size:.98rem;line-height:1.62}
+.jur__ir{margin-top:auto;padding-top:.5em;align-self:start;font:500 .74rem/1.3 var(--f-rotulo);letter-spacing:.16em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none}
+.jur__ir:hover{color:var(--pizarra)}
+
+/* la ficha de una resolución */
+.ficha{padding-block:clamp(40px,6vw,80px) clamp(60px,9vw,120px);max-width:74ch}
+.ficha__meta{display:flex;flex-wrap:wrap;gap:.3em 1.4em;margin-top:1.2em;font:500 .72rem/1.5 var(--f-rotulo);letter-spacing:.16em;text-transform:uppercase;color:var(--acero)}
+.ficha__materia{margin-top:1.3em;padding:12px 16px;border-left:2px solid var(--acero);background:var(--niebla-alta);font:400 1.02rem/1.5 var(--f-texto);color:var(--acero-hondo)}
+.bloque{margin-top:clamp(26px,3.4vw,40px)}
+.bloque h2{font:500 .78rem/1.3 var(--f-rotulo);letter-spacing:.26em;text-transform:uppercase;color:var(--acero-hondo);padding-bottom:.7em;border-bottom:1px solid rgba(26,31,38,.14)}
+.bloque p{margin-top:.9em;color:var(--gris)}
+.bloque--tip{padding:clamp(18px,2.4vw,26px);border:1px solid rgba(26,31,38,.12);border-radius:4px;background:var(--niebla-alta)}
+.bloque--tip h2{border:0;padding:0}
+.ficha__pdf{display:inline-flex;align-items:center;gap:.8em;margin-top:clamp(28px,3.6vw,44px);padding:.8em 1.4em;border:1px solid var(--acero);border-radius:3px;font:500 .76rem/1.2 var(--f-rotulo);letter-spacing:.16em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none;transition:background-color .25s,color .25s}
+.ficha__pdf:hover{background:var(--pizarra);border-color:var(--pizarra);color:#fff}
+.ficha__paginas{margin-top:1.1em;font-size:.86rem;color:var(--acero)}
+.ficha__volver{display:inline-block;margin-top:clamp(30px,4vw,48px);font:500 .74rem/1.3 var(--f-rotulo);letter-spacing:.16em;text-transform:uppercase;color:var(--acero-hondo);text-decoration:none}
+
+.pie{border-top:1px solid rgba(26,31,38,.12);background:var(--bruma)}
+.pie .caja{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-block:28px;font-size:.92rem;color:var(--gris)}
+.pie a{color:var(--acero-hondo);text-decoration:none}
+.pie a:hover{color:var(--pizarra)}
+@media(prefers-reduced-motion:reduce){.jur{transition:none}.jur:hover{transform:none}}
