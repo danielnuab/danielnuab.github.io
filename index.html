@@ -443,6 +443,11 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
 .js .wa:not(.ve){transform:translateY(110px)}
 .wa:active{transform:scale(.94)}
 @media(hover:hover) and (pointer:fine){.wa.ve:hover{transform:translateY(-3px)}}
+/* Texto justificado en el inicio y en jurisprudencia, con guionado: justificar
+   sin partir palabras abre ríos de espacio en cuanto la columna es estrecha, y
+   las tarjetas lo son. El idioma lo toma del <html lang="es-PE">. */
+.hero__entrada,.jurs .entrada,.jur__res,.jurs__aviso{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+
 /* ---------- jurisprudencia ----------
    Las tarjetas usan las mismas clases que /jurisprudencia/ (jurisprudencia.css):
    un solo molde de tarjeta para la portada, para esa página y para lo que el
