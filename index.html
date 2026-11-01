@@ -923,7 +923,10 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
   const abreMenu = si => {
     if (!menu || !botonMenu) return;
     menu.classList.toggle('abierto', si);
+    // Dos formas de lo mismo a propósito: hay navegadores donde asignar la propiedad no mueve el
+    // atributo, y entonces el panel se ve pero queda inerte: se abre y ninguna opción responde.
     menu.inert = !si;
+    if (si) menu.removeAttribute('inert'); else menu.setAttribute('inert', '');
     botonMenu.setAttribute('aria-expanded', si ? 'true' : 'false');
     botonMenu.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
     raiz.classList.toggle('sin-scroll', si);
@@ -963,15 +966,48 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
   }
 
   // Enlaces internos: desplazamiento suave sin depender del hash.
+  // Mientras el menú de celular está abierto, la página no se puede desplazar (html.sin-scroll).
+  // Si el salto se manda en el mismo instante en que el menú se cierra, hay teléfonos que lo
+  // ignoran y la página se queda donde estaba: por eso se salta en el fotograma siguiente, ya
+  // con el desplazamiento devuelto, y medio segundo después se comprueba que se haya movido.
+  const saltaA = id => {
+    const modo = quieto ? 'auto' : 'smooth';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const destino = d.getElementById(id);
+      if (!destino) return;
+      const desde = scrollY;
+      // El inicio queda fijo detrás de la página: scrollIntoView lo daría por visible.
+      const hasta = id === 'inicio' ? 0 : Math.max(0, destino.getBoundingClientRect().top + scrollY);
+      const salta = suave => {
+        if (suave) { try { scrollTo({ top: hasta, behavior: modo }); return; } catch (e) {} }
+        // De golpe de verdad: con scroll-behavior:smooth en el CSS, pedir 'auto' sigue siendo suave.
+        const tenia = raiz.style.scrollBehavior;
+        raiz.style.scrollBehavior = 'auto';
+        scrollTo(0, hasta);
+        raiz.style.scrollBehavior = tenia;
+      };
+      // La página mide trece pantallas: recorrer eso en suave tarda segundos, el usuario cree que
+      // no pasó nada, toca la pantalla y el navegador cancela el desplazamiento a medio camino.
+      // De lejos se va de golpe; solo los saltos cortos se hacen suaves.
+      salta(modo === 'smooth' && Math.abs(hasta - desde) < innerHeight * 2.5);
+      // Solo se insiste si no se movió NADA; si el desplazamiento suave va en camino, se deja.
+      // Y si tampoco así, se le pasa el salto al navegador por el hash, que no depende de nada mío.
+      if (Math.abs(hasta - desde) <= 8) return;
+      setTimeout(() => {
+        if (Math.abs(scrollY - desde) > 8) return;
+        salta(false);
+        setTimeout(() => {
+          if (Math.abs(scrollY - desde) < 8 && id !== 'inicio') location.hash = id;
+        }, 140);
+      }, 520);
+    }));
+  };
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-    const id = a.getAttribute('href').slice(1), destino = d.getElementById(id);
-    if (!destino) return;
+    const id = a.getAttribute('href').slice(1);
+    if (!d.getElementById(id)) return;
     e.preventDefault();
     abreMenu(false);
-    const modo = quieto ? 'auto' : 'smooth';
-    // El inicio queda fijo detrás de la página: scrollIntoView lo daría por visible.
-    if (id === 'inicio') scrollTo({ top: 0, behavior: modo });
-    else destino.scrollIntoView({ behavior: modo, block: 'start' });
+    saltaA(id);
   }));
 
   // Cifras: cuentan hasta su valor al asomar.
