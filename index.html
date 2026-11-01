@@ -120,7 +120,9 @@ h2 em,.lema em,.cierre__frase em{font-style:italic;color:var(--realce)}
 @media(hover:hover) and (pointer:fine){.cab__nav a:hover{color:var(--tinta)}.cab__nav a:hover::after{transform:scaleX(1)}}
 .cab__lado{display:flex;align-items:center;gap:8px}
 .cab__menu{position:relative;display:grid;place-items:center;width:44px;height:44px;padding:0;background:none;border:1px solid rgba(26,31,38,.2);border-radius:3px;cursor:pointer;transition:transform .16s var(--sale)}
-.cab__menu:active{transform:scale(.95)}
+/* al pulsar NO se encoge: en un teléfono, un botón que se achica bajo el dedo puede dejar el
+   toque fuera de su propia caja y el clic no llega a dispararse. Se marca con el fondo. */
+.cab__menu:active{background:rgba(26,31,38,.1)}
 .cab__menu i{position:absolute;width:18px;height:1.5px;background:var(--tinta);transition:transform .45s var(--suave)}
 .cab__menu i:first-child{transform:translateY(-4px)}
 .cab__menu i:last-child{transform:translateY(4px)}
@@ -917,6 +919,7 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
 
   // Menú de celular: pantalla completa, se cierra con Escape o al elegir.
   const menu = $('#menu'), botonMenu = $('.cab__menu');
+  const enlacesMenu = menu ? $$('ol a', menu) : [];
   const abreMenu = si => {
     if (!menu || !botonMenu) return;
     menu.classList.toggle('abierto', si);
@@ -924,11 +927,39 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
     botonMenu.setAttribute('aria-expanded', si ? 'true' : 'false');
     botonMenu.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
     raiz.classList.toggle('sin-scroll', si);
+    // Seguro: el menú aparece con una transición de opacidad. Si el navegador no la ejecuta
+    // (pestaña en segundo plano, ahorro de batería), el panel se queda invisible y parece que
+    // el botón no hace nada. Medio segundo después se comprueba y, si hace falta, se enciende.
+    if (!si) {
+      menu.style.opacity = '';
+      enlacesMenu.forEach(a => { a.style.opacity = ''; a.style.transform = ''; });
+      return;
+    }
+    setTimeout(() => {
+      if (!menu.classList.contains('abierto')) return;
+      if (getComputedStyle(menu).opacity !== '1') menu.style.opacity = '1';
+      enlacesMenu.forEach(a => {
+        if (getComputedStyle(a).opacity !== '1') { a.style.opacity = '1'; a.style.transform = 'none'; }
+      });
+    }, 520);
   };
   if (botonMenu) {
-    botonMenu.addEventListener('click', () => abreMenu(botonMenu.getAttribute('aria-expanded') !== 'true'));
+    // Se escucha el clic y también el levantar el dedo: en algunos teléfonos el clic se pierde
+    // (el dedo se mueve un pelo, la barra se repinta). La marca de tiempo evita que un mismo
+    // toque cuente dos veces.
+    let ultimoToque = 0;
+    const alternaMenu = () => {
+      const ahora = Date.now();
+      if (ahora - ultimoToque < 450) return;
+      ultimoToque = ahora;
+      abreMenu(botonMenu.getAttribute('aria-expanded') !== 'true');
+    };
+    botonMenu.addEventListener('click', alternaMenu);
+    if ('onpointerup' in botonMenu) botonMenu.addEventListener('pointerup', alternaMenu);
     addEventListener('keydown', e => { if (e.key === 'Escape') abreMenu(false); });
-    matchMedia('(min-width: 1100px)').addEventListener('change', () => abreMenu(false));
+    const ancha = matchMedia('(min-width: 1100px)');
+    if (ancha.addEventListener) ancha.addEventListener('change', () => abreMenu(false));
+    else if (ancha.addListener) ancha.addListener(() => abreMenu(false));
   }
 
   // Enlaces internos: desplazamiento suave sin depender del hash.
