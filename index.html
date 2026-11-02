@@ -27,7 +27,7 @@
 <title>Daniel Núñez Abogados | Abogados en Yurimaguas, Loreto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
+<link id="tipos" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 /* Niebla, acero y grafito: el cielo y el edificio de la foto de portada. Las secciones claras son el
@@ -520,15 +520,78 @@ h1 em{font-style:italic;padding-right:.06em;color:var(--acero-hondo);background:
   .sedes__lista button:hover{background:#fff}
   .chincheta:hover .chincheta__rot{opacity:1}
 }
+/* ---------- precarga: el escudo se dibuja mientras llegan las tipografías ---------- */
+/* Sin JavaScript no hay telón y la página se ve de una vez. El guion que lo retira va pegado al
+   telón, no en el bloque grande del final: si aquel fallara, este igual lo quita a los 2 s. */
+.carga{display:none}
+.js .carga{display:grid;place-items:center;position:fixed;inset:0;z-index:90;background:var(--niebla-alta);transition:opacity .55s var(--sale),visibility .55s}
+.cargado .carga{opacity:0;visibility:hidden}
+.carga__pieza{display:grid;justify-items:center;gap:30px;transition:transform .55s var(--sale)}
+.cargado .carga__pieza{transform:scale(1.05)}
+.carga__escudo{position:relative;display:block;width:118px;aspect-ratio:640/815}
+/* el escudo entero se revela de abajo arriba: la máscara mide el doble y se desliza */
+.carga__escudo i{position:absolute;inset:0;background:var(--img-escudo) center/contain no-repeat;-webkit-mask-image:linear-gradient(to top,#000 0 50%,transparent 50% 100%);mask-image:linear-gradient(to top,#000 0 50%,transparent 50% 100%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:traza .9s var(--vaiven) .1s both}
+.carga__escudo b{position:absolute;left:-8%;right:-8%;height:2px;background:linear-gradient(90deg,transparent,var(--pizarra) 22%,var(--pizarra) 78%,transparent);animation:filo .9s var(--vaiven) .1s both}
+@keyframes traza{from{-webkit-mask-position:0 0;mask-position:0 0}to{-webkit-mask-position:0 100%;mask-position:0 100%}}
+@keyframes filo{0%{top:100%;opacity:0}14%,86%{opacity:1}100%{top:-2%;opacity:0}}
+.carga__firma{display:grid;justify-items:center;gap:9px}
+.carga__marca{font:500 1.32rem/1 var(--f-titulo);letter-spacing:.18em;text-indent:.18em;text-transform:uppercase;color:var(--tinta);animation:nombre .8s var(--sale) .5s both}
+@keyframes nombre{from{opacity:0;letter-spacing:.52em}}
+/* la raya late mientras se espera: dice que algo sigue pasando sin ser un reloj de arena */
+.carga__raya{display:block;width:min(230px,52vw);height:1px;background:var(--pizarra);transform-origin:center;animation:raya .7s var(--sale) .72s both,latido 2.4s ease-in-out 1.6s infinite}
+@keyframes raya{from{transform:scaleX(0)}}
+@keyframes latido{50%{opacity:.3}}
+.carga__pie{font:500 .74rem/1 var(--f-rotulo);letter-spacing:.4em;text-indent:.4em;text-transform:uppercase;color:var(--acero-hondo);animation:rotulo .6s var(--sale) .95s both}
+@keyframes rotulo{from{opacity:0}}
+/* Con el telón puesto, la cabecera y el escudo del inicio todavía no arrancan. Se les quita la
+   animación en vez de pausarla: pausada desde el primer cuadro se queda sin hora de inicio y al
+   reanudarla no avanza nunca (la cabecera quedaba invisible). Así nace al quitar el telón. */
+.js:not(.cargado) .cab,.js:not(.cargado) .hero__marca{animation:none}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .js .rv{transform:none;filter:none}
+  .js .carga{display:none}
   .jur:hover{transform:none}
 }
 </style>
 </head>
 <body>
+<div class="carga" id="carga" aria-hidden="true">
+  <div class="carga__pieza">
+    <span class="carga__escudo"><i></i><b></b></span>
+    <span class="carga__firma">
+      <span class="carga__marca">Daniel Núñez</span>
+      <span class="carga__raya"></span>
+      <span class="carga__pie">Abogados</span>
+    </span>
+  </div>
+</div>
+<script>
+// Retira el telón cuando están las tipografías y, se atasque lo que se atasque, a los 2 s.
+// Va aquí y no en el bloque del final para que no dependa de que aquel llegue a ejecutarse.
+(() => {
+  const raiz = document.documentElement, telon = document.getElementById('carga');
+  if (!telon) return;
+  let hecho = false;
+  const fin = () => {
+    if (hecho) return;
+    hecho = true;
+    raiz.classList.add('cargado');
+    setTimeout(() => telon.remove(), 800);
+  };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { fin(); return; }
+  // Un mínimo de 1,05 s para que el escudo alcance a dibujarse: menos que eso es un parpadeo.
+  const desde = Date.now(), tope = setTimeout(fin, 2000);
+  const listo = () => { clearTimeout(tope); setTimeout(fin, Math.max(0, 1050 - (Date.now() - desde))); };
+  // document.fonts.ready se cumple de inmediato si la hoja de Google todavía no llegó: se espera a ella.
+  const tipos = document.getElementById('tipos');
+  const tras = () => (document.fonts ? document.fonts.ready.then(listo, listo) : listo());
+  if (!tipos || tipos.sheet) tras();
+  else { tipos.addEventListener('load', tras); tipos.addEventListener('error', tras); }
+})();
+</script>
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
   <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
   <symbol id="i-sale" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></symbol>
