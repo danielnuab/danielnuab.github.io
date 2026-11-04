@@ -33,7 +33,7 @@
 <main class="caja ficha">
   <p class="ceja">Corte Suprema</p>
   <h1>Casación <span class="nb">N.°</span>&nbsp;26029-2025 Huaura</h1>
-  <p class="ficha__meta"><span>Tercera Sala de Derecho Constitucional y Social Transitoria</span><span>16/07/2026</span><span>Laboral</span></p>
+  <p class="ficha__meta"><span>Tercera Sala de Derecho Constitucional y Social Transitoria</span><span>16/07/2026</span><span>Laboral</span><span class="vistas" data-vistas="jurisprudencia/corte-suprema-casacion-26029-2025-huaura" data-vistas-cuenta hidden></span></p>
   <p class="ficha__materia">Restitución de pensión y control posterior</p>
   <section class="bloque">
     <h2>El caso</h2>
@@ -56,6 +56,65 @@
   <p class="aviso">Las fichas las redacta Justiniano automáticamente a partir del texto de cada resolución. El documento que vale es el PDF oficial.</p>
   <a class="ficha__volver" href="../">&larr; Todas las resoluciones</a>
 </main>
+<script>
+/* Contador de vistas. La cuenta la lleva el VPS de Justiniano; aquí solo se
+   pide y se escribe. Sin cookies y sin guardar nada en el navegador: si el
+   servidor no contesta, los huecos se quedan ocultos y la página se ve igual. */
+(() => {
+  const API = 'https://justiniano.pe/api/public/vistas';
+
+  const escribe = (nodo, n) => {
+    if (!Number.isFinite(n) || n < 1) return;
+    nodo.textContent = n === 1 ? '1 vista' : n.toLocaleString('es-PE') + ' vistas';
+    nodo.hidden = false;
+    nodo.dataset.vistasPuesto = '1';
+  };
+  const parte = (nodo) => {
+    const d = (nodo.dataset.vistas || '').split('/');
+    return { tipo: d[0], slug: d.slice(1).join('/') };
+  };
+
+  // Los totales de las tarjetas de un listado o de la portada: un solo pedido
+  // para todas. Se puede llamar otra vez (window.vistasWeb) cuando la portada
+  // repinta su jurisprudencia con lo que trae Justiniano.
+  const lee = () => {
+    const nodos = Array.from(document.querySelectorAll('[data-vistas]'))
+      .filter((n) => !n.hasAttribute('data-vistas-cuenta') && !n.dataset.vistasPuesto);
+    if (!nodos.length) return;
+    const tipos = [...new Set(nodos.map((n) => parte(n).tipo))];
+    const url = tipos.length === 1 ? API + '?tipo=' + encodeURIComponent(tipos[0]) : API;
+    fetch(url)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d || !d.vistas) return;
+        for (const nodo of nodos) {
+          const { tipo, slug } = parte(nodo);
+          const mapa = d.tipo ? d.vistas : d.vistas[tipo];
+          if (mapa) escribe(nodo, mapa[slug]);
+        }
+      })
+      .catch(() => {});
+  };
+
+  // La página de una resolución o de un artículo: esta visita se suma.
+  const propio = document.querySelector('[data-vistas-cuenta]');
+  if (propio) {
+    const { tipo, slug } = parte(propio);
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tipo, slug }),
+      keepalive: true,
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (d) escribe(propio, d.vistas); })
+      .catch(() => {});
+  }
+
+  lee();
+  window.vistasWeb = lee;
+})();
+</script>
 <footer class="pie">
   <div class="caja">
     <span>Daniel Núñez Abogados · Calle Progreso N.° 113, Yurimaguas, Loreto</span>
