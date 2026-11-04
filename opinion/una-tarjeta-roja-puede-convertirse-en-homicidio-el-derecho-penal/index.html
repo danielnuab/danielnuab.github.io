@@ -22,11 +22,44 @@
 <link rel="alternate" type="application/rss+xml" title="Opinión — Daniel Núñez Abogados" href="../../opinion/feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
+<link id="tipos" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
 <link rel="stylesheet" href="../../opinion/opinion.css">
+<script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"OpinionNewsArticle","@id":"https://danielnuab.com/opinion/una-tarjeta-roja-puede-convertirse-en-homicidio-el-derecho-penal/","url":"https://danielnuab.com/opinion/una-tarjeta-roja-puede-convertirse-en-homicidio-el-derecho-penal/","headline":"¿UNA TARJETA ROJA PUEDE CONVERTIRSE EN HOMICIDIO? EL DERECHO PENAL FRENTE A LA MUERTE DE UN FUTBOLISTA","description":"La tragedia de Jesús de Miguel plantea una interrogante que trasciende las fronteras españolas: ¿cuándo una acción deportiva deja de ser un accidente y se convierte en un delito? La jurisprudencia peruana ofrece criterios para responderla.","inLanguage":"es-PE","datePublished":"2026-11-04","dateModified":"2026-11-04","wordCount":1959,"image":"https://danielnuab.com/opinion/una-tarjeta-roja-puede-convertirse-en-homicidio-el-derecho-penal/portada.jpg","author":{"@type":"Person","name":"Daniel Núñez Arévalo","jobTitle":"Socio fundador","url":"https://danielnuab.com/"},"isPartOf":{"@id":"https://danielnuab.com/#sitio"},"publisher":{"@id":"https://danielnuab.com/#firma"}}</script>
 </head>
 <body>
+<div class="carga" id="carga" aria-hidden="true">
+  <div class="carga__pieza">
+    <span class="carga__escudo"><i></i><b></b></span>
+    <span class="carga__firma">
+      <span class="carga__marca">Daniel Núñez</span>
+      <span class="carga__raya"></span>
+      <span class="carga__pie">Abogados</span>
+    </span>
+  </div>
+</div>
+<script>
+(() => {
+  const raiz = document.documentElement, telon = document.getElementById('carga');
+  if (!telon) return;
+  let hecho = false;
+  const fin = () => {
+    if (hecho) return;
+    hecho = true;
+    raiz.classList.add('cargado');
+    setTimeout(() => telon.remove(), 800);
+  };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { fin(); return; }
+  // Un minimo de 1,05 s para que el escudo alcance a dibujarse: menos es un parpadeo.
+  const desde = Date.now(), tope = setTimeout(fin, 2000);
+  const listo = () => { clearTimeout(tope); setTimeout(fin, Math.max(0, 1050 - (Date.now() - desde))); };
+  // document.fonts.ready se cumple de inmediato si la hoja de Google todavia no llego.
+  const tipos = document.getElementById('tipos');
+  const tras = () => (document.fonts ? document.fonts.ready.then(listo, listo) : listo());
+  if (!tipos || tipos.sheet) tras();
+  else { tipos.addEventListener('load', tras); tipos.addEventListener('error', tras); }
+})();
+</script>
 <header class="cab">
   <div class="caja">
     <a class="cab__logo" href="../../" aria-label="Daniel Núñez Abogados — inicio"></a>

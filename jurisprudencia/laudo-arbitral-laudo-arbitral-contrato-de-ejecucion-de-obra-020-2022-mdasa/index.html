@@ -19,11 +19,44 @@
 <link rel="alternate" type="application/rss+xml" title="Jurisprudencia — Daniel Núñez Abogados" href="../../feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
+<link id="tipos" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Lato:wght@400;700&family=Oswald:wght@400..600&display=swap">
 <link rel="stylesheet" href="../../jurisprudencia/jurisprudencia.css">
+<script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://danielnuab.com/jurisprudencia/laudo-arbitral-laudo-arbitral-contrato-de-ejecucion-de-obra-020-2022-mdasa/","url":"https://danielnuab.com/jurisprudencia/laudo-arbitral-laudo-arbitral-contrato-de-ejecucion-de-obra-020-2022-mdasa/","headline":"Laudo arbitral – Contrato de Ejecución de Obra N.° 020-2022-MDASA — Liquidación consentida de obra y garantía","description":"El Consorcio San Luis ejecutó una obra de recreación pública para la Municipalidad Distrital de Alto Selva Alegre. Tras presentar su liquidación el 15 de noviembre de 2024, reclamó que esta había quedado consentida y exigió S/ 372,333.76,…","inLanguage":"es-PE","isPartOf":{"@id":"https://danielnuab.com/#sitio"},"publisher":{"@id":"https://danielnuab.com/#firma"},"about":"Liquidación consentida de obra y garantía","dateModified":"2026-11-04","datePublished":"2026-10-28"}</script>
 </head>
 <body>
+<div class="carga" id="carga" aria-hidden="true">
+  <div class="carga__pieza">
+    <span class="carga__escudo"><i></i><b></b></span>
+    <span class="carga__firma">
+      <span class="carga__marca">Daniel Núñez</span>
+      <span class="carga__raya"></span>
+      <span class="carga__pie">Abogados</span>
+    </span>
+  </div>
+</div>
+<script>
+(() => {
+  const raiz = document.documentElement, telon = document.getElementById('carga');
+  if (!telon) return;
+  let hecho = false;
+  const fin = () => {
+    if (hecho) return;
+    hecho = true;
+    raiz.classList.add('cargado');
+    setTimeout(() => telon.remove(), 800);
+  };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { fin(); return; }
+  // Un minimo de 1,05 s para que el escudo alcance a dibujarse: menos es un parpadeo.
+  const desde = Date.now(), tope = setTimeout(fin, 2000);
+  const listo = () => { clearTimeout(tope); setTimeout(fin, Math.max(0, 1050 - (Date.now() - desde))); };
+  // document.fonts.ready se cumple de inmediato si la hoja de Google todavia no llego.
+  const tipos = document.getElementById('tipos');
+  const tras = () => (document.fonts ? document.fonts.ready.then(listo, listo) : listo());
+  if (!tipos || tipos.sheet) tras();
+  else { tipos.addEventListener('load', tras); tipos.addEventListener('error', tras); }
+})();
+</script>
 <header class="cab">
   <div class="caja">
     <a class="cab__logo" href="../../" aria-label="Daniel Núñez Abogados — inicio"></a>
